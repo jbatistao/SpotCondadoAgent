@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Virtual</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-center items-center h-screen m-0 bg-gray-200 text-[10px] font-sans">
+
+  <div id="chat-container" class="w-[400px] max-w-[90%] h-[80vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden">
+    
+    <!-- Header -->
+    <div class="bg-blue-500 text-white text-center p-2">
+      <h1 class="text-sm font-bold">Spot Condado</h1>
+      <p class="text-[9px]">Agente de Información - IA</p>
+    </div>
+
+    <!-- Chat -->
+    <div id="chat" class="flex-1 p-2 overflow-y-auto flex flex-col gap-1.5"></div>
+    
+    <!-- Input -->
+    <div id="input-container" class="flex border-t border-gray-300 p-1 bg-white">
+      <input id="input" type="text" placeholder="Escribe un mensaje..." 
+             class="flex-1 px-2 py-1 border-none outline-none text-[10px] leading-none" />
+      <button id="send" 
+              class="px-3 py-1 bg-blue-500 text-white text-[10px] rounded hover:bg-blue-700">
+        Enviar
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+    const sendBtn = document.getElementById('send');
+
+    // Función para agregar mensajes al chat
+    function addMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.classList.add(
+        "px-2", "py-1.5", "rounded-2xl", "max-w-[80%]", "break-words", "text-[10px]"
+      );
+
+      if (sender === "user") {
+        msg.classList.add("self-end", "bg-[#dcf8c6]");
+      } else {
+        msg.classList.add("self-start", "bg-gray-200");
+      }
+
+      msg.innerText = text;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // Función para enviar mensaje al webhook de n8n
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      input.value = '';
+
+      try {
+        const response = await fetch('http://localhost:5678/webhook/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+
+        const data = await response.json();
+        addMessage(data.reply || "Sin respuesta", 'bot');
+      } catch (err) {
+        addMessage("Error conectando con el bot.", 'bot');
+        console.error(err);
+      }
+    }
+
+    // Eventos
+    sendBtn.addEventListener('click', sendMessage);
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+
+</body>
+</html>
