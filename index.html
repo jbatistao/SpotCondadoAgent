@@ -12,8 +12,8 @@
     
     <!-- Header -->
     <div class="bg-blue-500 text-white text-center p-2">
-      <h1 class="text-lg font-bold">Spot Condado Del Rey</h1>
-      <p class="text-md">Agente de Información - IA</p>
+      <p class="text-lg font-bold">Spot Condado Del Rey</p>
+      <p class="text-xs">Agente de Información - IA</p>
     </div>
 
     <!-- Chat -->
@@ -40,7 +40,7 @@
     function addMessage(text, sender) {
       const msg = document.createElement('div');
       msg.classList.add(
-        "px-2", "py-1.5", "rounded-2xl", "max-w-[80%]", "break-words", "text-lg"
+        "px-2", "py-1.5", "rounded-lg", "max-w-[80%]", "break-words", "text-md"
       );
 
       if (sender === "user") {
