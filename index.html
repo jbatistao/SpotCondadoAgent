@@ -1,108 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agente IA - Spot Condado</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex justify-center items-center h-screen m-0 bg-gray-200 text-lg font-sans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agente IA - Spot Condado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="flex justify-center items-center h-screen m-0 bg-gray-200 text-lg font-sans"
+  >
+    <div
+      id="chat-container"
+      class="w-[400px] max-w-[90%] h-[90vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden"
+    >
+      <!-- Header -->
+      <div class="bg-blue-500 text-white text-center p-2">
+        <p class="text-lg font-bold">Spot Condado Del Rey</p>
+        <p class="text-xs">Agente de Información - IA</p>
+        <p class="text-xs">by iaagentspty - 2025</p>
+      </div>
 
-  <div id="chat-container" class="w-[400px] max-w-[90%] h-[80vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden">
-    
-    <!-- Header -->
-    <div class="bg-blue-500 text-white text-center p-2">
-      <p class="text-lg font-bold">Spot Condado Del Rey</p>
-      <p class="text-xs">Agente de Información - IA</p>
-      <p class="text-xs">by iaagentspty - 2025</p>
-    </div>
+      <!-- Tips básicos -->
+      <div class="bg-blue-50 border-b border-blue-100 p-3">
+        <h3 class="text-sm font-semibold text-blue-800 mb-2">
+          💡 Tips Básicos:
+        </h3>
+        <div class="space-y-1 text-xs text-blue-700">
+          <div class="flex items-start gap-1">
+            <span class="text-blue-500">•</span>
+            <span>Pregunta sobre actividades comerciales y/o comercios</span>
+          </div>
+          <div class="flex items-start gap-1">
+            <span class="text-blue-500">•</span>
+            <span>Consulta por productos, precios y características</span>
+          </div>
+          <div class="flex items-start gap-1">
+            <span class="text-blue-500">•</span>
+            <span>Solicita información de contacto y ubicación</span>
+          </div>
+        </div>
+      </div>
 
-    <!-- Tips básicos -->
-    <div class="bg-blue-50 border-b border-blue-100 p-3">
-      <h3 class="text-sm font-semibold text-blue-800 mb-2">💡 Tips Básicos:</h3>
-      <div class="space-y-1 text-xs text-blue-700">
-        <div class="flex items-start gap-1">
-          <span class="text-blue-500">•</span>
-          <span>Pregunta sobre actividades comerciales y/o comercios</span>
-        </div>
-        <div class="flex items-start gap-1">
-          <span class="text-blue-500">•</span>
-          <span>Consulta por productos, precios y características</span>
-        </div>
-        <div class="flex items-start gap-1">
-          <span class="text-blue-500">•</span>
-          <span>Solicita información de contacto y ubicación</span>
-        </div>
+      <!-- Chat -->
+      <div
+        id="chat"
+        class="flex-1 p-2 overflow-y-auto flex flex-col gap-1.5"
+      ></div>
+
+      <!-- Input -->
+      <div
+        id="input-container"
+        class="flex border-t border-gray-300 p-1 bg-white"
+      >
+        <input
+          id="input"
+          type="text"
+          placeholder="Escribe un mensaje..."
+          class="flex-1 px-2 py-1 border-none outline-none text-lg leading-none"
+        />
+        <button
+          id="send"
+          class="px-3 py-1 bg-blue-500 text-white text-lg rounded hover:bg-blue-700"
+        >
+          Enviar
+        </button>
+      </div>
+
+      <!-- Botones rápidos -->
+      <div
+        class="p-2 border-t border-gray-300 bg-gray-50 grid grid-cols-1 gap-2"
+      >
+        <button
+          onclick="sendMessage('cuántos comercios tienes registrados')"
+          class="w-full px-3 py-2 bg-green-500 text-white text-sm rounded hover:bg-green-600"
+        >
+          📊 Comercios registrados
+        </button>
+        <button
+          onclick="sendMessage('cuáles son las actividades comerciales que tienes registradas')"
+          class="w-full px-3 py-2 bg-indigo-500 text-white text-sm rounded hover:bg-indigo-600"
+        >
+          🏷️ Actividades comerciales
+        </button>
+        <button
+          onclick="sendMessage('lista los nombres de los primeros 3 comercios de tus registros')"
+          class="w-full px-3 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
+        >
+          🔢 Primeros 3 comercios
+        </button>
+        <button
+          onclick="sendMessage('lista los nombres de comercios que inicien con la letra p')"
+          class="w-full px-3 py-2 bg-purple-500 text-white text-sm rounded hover:bg-purple-600"
+        >
+          🔤 Comercios con nombres que inician con P
+        </button>
+        <button
+          onclick="sendMessage('lista los 3 comercios con mejor calificación')"
+          class="w-full px-3 py-2 bg-orange-500 text-white text-sm rounded hover:bg-orange-600"
+        >
+          ⭐ Top 3 por calificación
+        </button>
+        <button
+          onclick="sendMessage('qué servicios ofrece Jade Cake & Bakery')"
+          class="w-full px-3 py-2 bg-pink-500 text-white text-sm rounded hover:bg-pink-600"
+        >
+          🍰 Servicios disponibles Jade Cake
+        </button>
+        <button
+          onclick="sendMessage('listame los nombres de las dulcerías ordenadas según su calificación')"
+          class="w-full px-3 py-2 bg-green-700 text-white text-sm rounded hover:bg-pink-600"
+        >
+          🍰 Listado de dulcerías según ranking
+        </button>
+        <button
+          onclick="sendMessage('cuál es el número de teléfono de Jade Cake & Bakery')"
+          class="w-full px-3 py-2 bg-blue-700 text-white text-sm rounded hover:bg-pink-600"
+        >
+          🍰 Teléfono de un comercio
+        </button>
       </div>
     </div>
 
-    <!-- Chat -->
-    <div id="chat" class="flex-1 p-2 overflow-y-auto flex flex-col gap-1.5"></div>
-    
-    <!-- Input -->
-    <div id="input-container" class="flex border-t border-gray-300 p-1 bg-white">
-      <input id="input" type="text" placeholder="Escribe un mensaje..." 
-             class="flex-1 px-2 py-1 border-none outline-none text-lg leading-none" />
-      <button id="send" 
-              class="px-3 py-1 bg-blue-500 text-white text-lg rounded hover:bg-blue-700">
-        Enviar
-      </button>
-    </div>
+    <script>
+      const chat = document.getElementById("chat");
+      const input = document.getElementById("input");
+      const sendBtn = document.getElementById("send");
 
-  </div>
+      // Función para agregar mensajes al chat
+      function addMessage(text, sender) {
+        const msg = document.createElement("div");
+        msg.classList.add(
+          "px-2",
+          "py-1.5",
+          "rounded-lg",
+          "max-w-[80%]",
+          "break-words",
+          "text-md"
+        );
 
-  <script>
-    const chat = document.getElementById('chat');
-    const input = document.getElementById('input');
-    const sendBtn = document.getElementById('send');
+        if (sender === "user") {
+          msg.classList.add("self-end", "bg-[#dcf8c6]");
+        } else {
+          msg.classList.add("self-start", "bg-gray-200");
+        }
 
-    // Función para agregar mensajes al chat
-    function addMessage(text, sender) {
-      const msg = document.createElement('div');
-      msg.classList.add(
-        "px-2", "py-1.5", "rounded-lg", "max-w-[80%]", "break-words", "text-md"
-      );
-
-      if (sender === "user") {
-        msg.classList.add("self-end", "bg-[#dcf8c6]");
-      } else {
-        msg.classList.add("self-start", "bg-gray-200");
+        msg.innerText = text;
+        chat.appendChild(msg);
+        chat.scrollTop = chat.scrollHeight;
       }
 
-      msg.innerText = text;
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
-    }
+      // Función para enviar mensaje al webhook
+      async function sendMessage(forcedText = null) {
+        const text = forcedText || input.value.trim();
+        if (!text) return;
 
-    // Función para enviar mensaje al webhook de n8n
-    async function sendMessage() {
-      const text = input.value.trim();
-      if (!text) return;
+        addMessage(text, "user");
+        input.value = "";
 
-      addMessage(text, 'user');
-      input.value = '';
+        try {
+          const response = await fetch(
+            "https://app--n8n--2jf568c7hw5j.code.run/webhook/chat",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ message: text }),
+            }
+          );
 
-      try {
-        const response = await fetch('https://app--n8n--2jf568c7hw5j.code.run/webhook/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
-        });
-
-        const data = await response.json();
-        addMessage(data.reply || "Sin respuesta", 'bot');
-      } catch (err) {
-        addMessage("Error conectando con el bot.", 'bot');
-        console.error(err);
+          const data = await response.json();
+          addMessage(data.reply || "Sin respuesta", "bot");
+        } catch (err) {
+          addMessage("Error conectando con el bot.", "bot");
+          console.error(err);
+        }
       }
-    }
 
-    // Eventos
-    sendBtn.addEventListener('click', sendMessage);
-    input.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
-  </script>
-
-</body>
+      // Eventos
+      sendBtn.addEventListener("click", () => sendMessage());
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+    </script>
+  </body>
 </html>
