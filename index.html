@@ -63,7 +63,7 @@
       input.value = '';
 
       try {
-        const response = await fetch('https://app--n8n--2jf568c7hw5j.code.run/webhook-test/chat', {
+        const response = await fetch('https://app--n8n--2jf568c7hw5j.code.run/webhook/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text })
