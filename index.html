@@ -6,7 +6,7 @@
   <title>Chat Virtual</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex justify-center items-center h-screen m-0 bg-gray-200 text-[10px] font-sans">
+<body class="flex justify-center items-center h-screen m-0 bg-gray-200 text-lg font-sans">
 
   <div id="chat-container" class="w-[400px] max-w-[90%] h-[80vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden">
     
@@ -22,9 +22,9 @@
     <!-- Input -->
     <div id="input-container" class="flex border-t border-gray-300 p-1 bg-white">
       <input id="input" type="text" placeholder="Escribe un mensaje..." 
-             class="flex-1 px-2 py-1 border-none outline-none text-[10px] leading-none" />
+             class="flex-1 px-2 py-1 border-none outline-none text-lg leading-none" />
       <button id="send" 
-              class="px-3 py-1 bg-blue-500 text-white text-[10px] rounded hover:bg-blue-700">
+              class="px-3 py-1 bg-blue-500 text-white text-lg rounded hover:bg-blue-700">
         Enviar
       </button>
     </div>
@@ -40,7 +40,7 @@
     function addMessage(text, sender) {
       const msg = document.createElement('div');
       msg.classList.add(
-        "px-2", "py-1.5", "rounded-2xl", "max-w-[80%]", "break-words", "text-[10px]"
+        "px-2", "py-1.5", "rounded-2xl", "max-w-[80%]", "break-words", "text-lg"
       );
 
       if (sender === "user") {
